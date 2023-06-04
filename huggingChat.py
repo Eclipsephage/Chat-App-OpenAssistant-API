@@ -5,6 +5,9 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 from langchain import PromptTemplate, HuggingFaceHub, LLMChain
 from dotenv import load_dotenv
 
+#SETUP
+MAX_LENGTH = 200
+
 # load the Environment Variables. 
 load_dotenv()
 st.set_page_config(page_title="OpenAssistant Powered Chat App")
@@ -58,7 +61,7 @@ def main():
         
         prompt = PromptTemplate(template=template, input_variables=["question"])
 
-        llm=HuggingFaceHub(repo_id="OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5")
+        llm=HuggingFaceHub(repo_id="OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5", model_kwargs={"max_length": MAX_LENGTH})
 
         llm_chain=LLMChain(
             llm=llm,
@@ -70,6 +73,7 @@ def main():
     # generate response
     def generate_response(question, llm_chain):
         response = llm_chain.run(question)
+        st.write(f"Length of the generated response: {len(response)}")
         return response
 
     ## load LLM

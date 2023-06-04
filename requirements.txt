@@ -2,3 +2,5 @@ streamlit
 hugchat
 streamlit-chat
 streamlit-extras
+langchain
+python-dotenv
